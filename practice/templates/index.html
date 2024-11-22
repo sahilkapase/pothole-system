@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Pothole detection system</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.ico" rel="icon">
+
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="assets/img/logo.png" alt="">
+        <h1 class="sitename">Pothole Detection</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html#hero" class="active">Home</a></li>
+          <li><a href="index.html#faq">About</a></li>
+          <li><a href="index.html#featured-services">Features</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="statistics.html">Statastics</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="model.html">Get Started</a>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section">
+      <div class="hero-bg">
+        <img src="assets/img/hero-bg-light.webp" alt="">
+      </div>
+      <div class="container text-center">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <h1 data-aos="fade-up">Detect, Measure, Estimate</h1>
+          <p data-aos="fade-up" data-aos-delay="100">Efficiently identify potholes, calculate areas, and estimate repair
+            costs with precision.</p>
+          <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+            <a href="model.html" class="btn-get-started">Get Started</a>
+            <a href="https://youtu.be/2UdFr7OuLQs?si=u1B_WHIn2l35FM2o"
+              class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch
+                Demo</span></a>
+          </div>
+          <img src="assets/img/hero-services-img.webp" class="img-fluid hero-img" alt="" data-aos="zoom-out"
+            data-aos-delay="300">
+        </div>
+      </div>
+    </section><!-- /Hero Section -->
+
+    <!-- Featured Services Section -->
+    <section id="featured-services" class="featured-services section light-background">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-xl-4 col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-map"></i></div>
+              <div>
+                <h4 class="title"><a href="#" class="stretched-link">Pothole Detection</a></h4>
+                <p class="description">Accurately detect potholes using advanced imaging and machine learning
+                  technology.</p>
+              </div>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-xl-4 col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-rulers"></i></div>
+              <div>
+                <h4 class="title"><a href="#" class="stretched-link">Area Calculation</a></h4>
+                <p class="description">Measure the exact area of road damage for accurate repair planning and resource
+                  allocation.</p>
+              </div>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-xl-4 col-lg-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item d-flex">
+              <div class="icon flex-shrink-0"><i class="bi bi-currency-dollar"></i></div>
+              <div>
+                <h4 class="title"><a href="#" class="stretched-link">Cost Estimation</a></h4>
+                <p class="description">Estimate repair costs based on the detected damage and calculated area.</p>
+              </div>
+            </div>
+          </div><!-- End Service Item -->
+
+        </div>
+      </div>
+    </section><!-- /Featured Services Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+            <p class="who-we-are">Who We Are</p>
+            <h3>Innovating Road Maintenance Solutions</h3>
+            <p class="fst-italic">
+              We provide cutting-edge technology to simplify pothole detection, measurement, and repair cost estimation
+              for safer roads.
+            </p>
+            <ul>
+              <li><i class="bi bi-check-circle"></i> <span>Fast and accurate pothole detection.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Detailed area calculations for effective repairs.</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>Reliable cost estimates for better budget planning.</span>
+              </li>
+            </ul>
+            <a href="#" class="read-more"><span>Learn More</span><i class="bi bi-arrow-right"></i></a>
+          </div>
+
+          <div class="col-lg-6 about-images" data-aos="fade-up" data-aos-delay="200">
+            <div class="row gy-4">
+              <div class="col-lg-6">
+                <img src="assets/img/image4.png" class="img-fluid" alt="">
+              </div>
+              <div class="col-lg-6">
+                <div class="row gy-4">
+                  <div class="col-lg-12">
+                    <img src="assets/img/image3.png" class="img-fluid" alt="">
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section><!-- /About Section -->
+
+
+
+
+    <!-- more feature section -->
+
+    <!<section id="more-features" class="more-features section">
+      <div class="container">
+        <div class="row justify-content-around gy-4">
+          <div class="col-lg-6 d-flex flex-column justify-content-center order-2 order-lg-1" data-aos="fade-up"
+            data-aos-delay="100">
+            <h3>Why Choose Our Pothole Detection System?</h3>
+            <p>Our advanced tools make pothole detection simple, accurate, and cost-effective, helping cities and
+              contractors manage road repairs efficiently.</p>
+
+            <div class="row">
+
+              <div class="col-lg-6 icon-box d-flex">
+                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                <div>
+                  <h4>Accurate Detection</h4>
+                  <p>Utilize advanced algorithms to detect potholes with pinpoint accuracy.</p>
+                </div>
+              </div>
+
+              <div class="col-lg-6 icon-box d-flex">
+                <i class="bi bi-rulers flex-shrink-0"></i>
+                <div>
+                  <h4>Area Calculation</h4>
+                  <p>Calculate the affected area seamlessly, aiding in precise repair estimates.</p>
+                </div>
+              </div>
+
+              <div class="col-lg-6 icon-box d-flex">
+                <i class="bi bi-cash-stack flex-shrink-0"></i>
+                <div>
+                  <h4>Cost Estimation</h4>
+                  <p>Get quick and accurate cost estimates for repair and maintenance.</p>
+                </div>
+              </div>
+
+              <div class="col-lg-6 icon-box d-flex">
+                <i class="bi bi-cloud-upload flex-shrink-0"></i>
+                <div>
+                  <h4>Cloud Integration</h4>
+                  <p>Store and access pothole data securely in the cloud, anytime, anywhere.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="features-image col-lg-5 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="200">
+            <img src="assets/img/image1.png" alt="Pothole Detection">
+          </div>
+        </div>
+      </div>
+      </section>
+
+
+
+
+      <!-- Faq Section -->
+      <section id="faq" class="faq section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Frequently Asked Questions</h2>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+
+          <div class="row justify-content-center">
+
+            <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+
+              <div class="faq-container">
+
+                <div class="faq-item faq-active">
+                  <h3>What is pothole detection and how does it work?</h3>
+                  <div class="faq-content">
+                    <p>Pothole detection uses advanced algorithms and image processing to identify and analyze potholes
+                      on roads. Our system detects their location, size, and severity through uploaded images.</p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div><!-- End Faq item-->
+
+                <div class="faq-item">
+                  <h3>How accurate is the area calculation?</h3>
+                  <div class="faq-content">
+                    <p>Our system leverages AI to ensure precise measurements, but accuracy can vary based on image
+                      quality and angle. For best results, follow our image upload guidelines.</p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div><!-- End Faq item-->
+
+                <div class="faq-item">
+                  <h3>How is the repair cost estimated?</h3>
+                  <div class="faq-content">
+                    <p>We use industry-standard rates and materials data, along with the detected pothole area and
+                      depth, to calculate an estimated repair cost. This helps municipalities and contractors budget
+                      effectively.</p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div><!-- End Faq item-->
+
+                <div class="faq-item">
+                  <h3>What types of roads does the system support?</h3>
+                  <div class="faq-content">
+                    <p>The system works on all types of paved roads, including asphalt and concrete surfaces. Ensure
+                      good lighting and clear visibility when capturing images.</p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div><!-- End Faq item-->
+
+                <div class="faq-item">
+                  <h3>Can I integrate this system with my city’s maintenance database?</h3>
+                  <div class="faq-content">
+                    <p>Yes! Our platform offers API access for easy integration with existing infrastructure management
+                      systems.</p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div><!-- End Faq item-->
+
+                <div class="faq-item">
+                  <h3>Is my data secure when I upload images?</h3>
+                  <div class="faq-content">
+                    <p>Absolutely. We employ advanced encryption methods to ensure that all uploaded images and user
+                      data remain secure and private.</p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div><!-- End Faq item-->
+              </div>
+
+            </div><!-- End Faq Column-->
+
+          </div>
+
+        </div>
+
+      </section><!-- /Faq Section -->
+
+
+
+
+      <!-- Contact Section -->
+      <section id="contact" class="contact section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Contact</h2>
+          <p> If you have any query then contact us</p>
+        </div><!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="row gy-4">
+
+            <div class="col-lg-6">
+              <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up"
+                data-aos-delay="200">
+                <i class="bi bi-geo-alt"></i>
+                <h3>Address</h3>
+                <p>VISHWAKARMA INSTITUTE OF TECHNOLOGY VIT,
+                  Upper Indira Nagar, Bibwewadi, Pune, Maharashtra 411037</p>
+              </div>
+            </div><!-- End Info Item -->
+
+            <div class="col-lg-3 col-md-6">
+              <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up"
+                data-aos-delay="300">
+                <i class="bi bi-telephone"></i>
+                <h3>Call Us</h3>
+                <p>+91 9172858669</p>
+              </div>
+            </div><!-- End Info Item -->
+
+            <div class="col-lg-3 col-md-6">
+              <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up"
+                data-aos-delay="400">
+                <i class="bi bi-envelope"></i>
+                <h3>Email Us</h3>
+                <p>pothole.yolov8@gmail.com</p>
+              </div>
+            </div><!-- End Info Item -->
+
+          </div>
+          <div class="row gy-4 mt-1">
+            <!-- Google Maps -->
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60551.07405626427!2d73.79198604863282!3d18.463621899999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2ea950f616219%3A0x321bdae2cea9f064!2sVishwakarma%20Institute%20of%20Technology%20(VIT)!5e0!3m2!1sen!2sin!4v1732250309524!5m2!1sen!2sin"
+                frameborder="0" style="border:0; width: 100%; height: 400px;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div><!-- End Google Maps -->
+
+            <!-- Contact Form -->
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+              <form action="forms/contact.php" method="post" class="php-email-form">
+                <div class="row gy-4">
+                  <div class="col-md-6">
+                    <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                  </div>
+
+                  <div class="col-md-6">
+                    <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                  </div>
+
+                  <div class="col-md-12">
+                    <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                  </div>
+
+                  <div class="col-md-12">
+                    <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                  </div>
+
+                  <div class="col-md-12 text-center">
+                    <div class="loading">Loading</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message">Your message has been sent. Thank you!</div>
+                    <button type="submit">Send Message</button>
+                  </div>
+                </div>
+              </form>
+            </div><!-- End Contact Form -->
+          </div><!-- End Row -->
+
+
+        </div>
+
+        </div>
+
+      </section><!-- /Contact Section -->
+
+  </main>
+
+  <footer id="footer" class="footer position-relative light-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">QuickStart</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>VIT, pune </p>
+            <p>Bibwewadi </p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+91 9172858669</span></p>
+            <p><strong>Email:</strong> <span>pothole.yolov8@gmail.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About us</a></li>
+
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+
+
+        <div class="col-lg-4 col-md-12 footer-newsletter">
+          <h4>Our Newsletter</h4>
+          <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+          <form action="forms/newsletter.php" method="post" class="php-email-form">
+            <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Pothole Detection</strong><span>All Rights
+          Reserved</span></p>
+
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
