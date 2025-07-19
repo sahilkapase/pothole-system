@@ -1,18 +1,24 @@
-from flask import Flask, request, jsonify, render_template, send_from_directory
+from flask import Flask, request, jsonify, render_template, send_from_directory, abort
 import cv2
 import numpy as np
 from ultralytics import YOLO
 import os
 import json
+from dotenv import load_dotenv
 
-app = Flask(__name__, static_folder='/')  # Serve static files from the 'assets' folder
+load_dotenv()
+
+SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key')
+UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', './uploads')
+RESULT_FOLDER = os.environ.get('RESULT_FOLDER', './results')
+STATIC_FOLDER = os.environ.get('STATIC_FOLDER', './static')
+STATS_FILE = os.environ.get('STATS_FILE', './stats.json')
+
+app = Flask(__name__, static_folder='/')
+app.secret_key = SECRET_KEY
 
 # Model and folders
 model = YOLO(r"best.pt")
-UPLOAD_FOLDER = "./uploads"
-RESULT_FOLDER = "./results"
-STATIC_FOLDER = "./static"
-STATS_FILE = "./stats.json"
 
 # Create necessary directories
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -32,29 +38,35 @@ def process_image(image_path):
     if image is None:
         return None, "Error: Could not read the image."
 
+    # Get the total image area
+    total_image_area = image.shape[0] * image.shape[1]
+
     # Perform model prediction
     results = model.predict(image, conf=0.25)
     processed_data = []
 
     # Process detections
-    for idx, detection in enumerate(results[0].boxes):  # Add indexing
+    for idx, detection in enumerate(results[0].boxes):
         x1, y1, x2, y2 = map(int, detection.xyxy[0])
         polygon = [(x1, y1), (x2, y1), (x2, y2), (x1, y2)]
         area = calculate_area(polygon)
         cost = calculate_cost(area)
+
+        # Calculate percentage damage
+        percentage_damage = (area * 100) / (total_image_area / 1000)
+
         processed_data.append({
-            'index': idx + 1,  # Add the pothole index
+            'index': idx + 1,
             'polygon': polygon,
             'area_m2': area,
-            'cost_rupees': cost
+            'cost_rupees': cost,
+            'percentage_damage': percentage_damage
         })
 
         # Draw bounding box on the image
         cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
-
-        # Draw the pothole index near the top-left corner of the bounding box in black
-        label_position = (x1, y1 - 10) if y1 > 20 else (x1, y1 + 20)  # Adjust position if too close to the edge
-        cv2.putText(image, f">{idx + 1}", label_position, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2)
+        label_position = (x1, y1 - 10) if y1 > 20 else (x1, y1 + 20)
+        cv2.putText(image, f"{idx + 1}", label_position, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2)
 
     # Save result image
     result_image_path = os.path.join(RESULT_FOLDER, os.path.basename(image_path))
@@ -72,13 +84,13 @@ def calculate_area(polygon):
         j = (i + 1) % n
         area += polygon[i][0] * polygon[j][1]
         area -= polygon[j][0] * polygon[i][1]
-    return abs(area) / 1000  # Area in square meters (scaling factor adjusted)
+    return abs(area) / 1000
 
 
 def calculate_cost(area):
     """Calculate maintenance cost based on area in rupees."""
-    cost_per_square_meter_in_rupees = 50  # Cost per square meter in rupees
-    return area * cost_per_square_meter_in_rupees  # Return cost in rupees
+    cost_per_square_meter_in_rupees = 50
+    return area * cost_per_square_meter_in_rupees
 
 
 def update_statistics(detections):
@@ -95,69 +107,67 @@ def update_statistics(detections):
         json.dump(stats, f)
 
 
-# Routes
+ALLOWED_EXTENSIONS = {'.jpg', '.jpeg', '.png'}
+MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
+
+def allowed_file(filename):
+    return os.path.splitext(filename)[1].lower() in ALLOWED_EXTENSIONS
+
 @app.route('/')
 def index():
-    """Serve the main page."""
     return render_template("index.html")
 
 
 @app.route('/model.html')
 def upload_page():
-    """Serve the image upload page."""
     return render_template("model.html")
 
 
 @app.route('/statistics.html')
 def statistics_page():
-    """Serve the statistics page."""
     return render_template("statistics.html")
 
 
 @app.route('/api/upload', methods=['POST'])
 def upload_image():
-    """Handle image upload and detection."""
     if 'image' not in request.files:
         return jsonify({'error': 'No image uploaded.'}), 400
 
-    # Save uploaded image
     image_file = request.files['image']
-    image_path = os.path.join(UPLOAD_FOLDER, image_file.filename)
+    filename = image_file.filename
+    if not allowed_file(filename):
+        return jsonify({'error': 'Invalid file type. Only .jpg, .jpeg, .png allowed.'}), 400
+
+    image_file.seek(0, os.SEEK_END)
+    file_size = image_file.tell()
+    image_file.seek(0)
+    if file_size > MAX_FILE_SIZE:
+        return jsonify({'error': 'File too large. Max size is 5MB.'}), 400
+
+    image_path = os.path.join(UPLOAD_FOLDER, filename)
     image_file.save(image_path)
 
-    # Process image and detect potholes
     processed_data, result_image_filename = process_image(image_path)
     if not processed_data:
         return jsonify({'error': "Error processing the image."}), 500
 
-    # Update statistics
     update_statistics(processed_data)
 
-    # Return JSON response
     result_image_url = f"/results/{result_image_filename}"
     return jsonify({'detections': processed_data, 'result_image': result_image_url})
 
 
-@app.route('/results/<filename>')
-def serve_result_image(filename):
-    """Serve the result image."""
-    return send_from_directory(RESULT_FOLDER, filename)
-
-
-@app.route('/assets/<filename>')
-def serve_asset(filename):
-    """Serve files from the assets folder."""
-    return send_from_directory('assets', filename)
-
-
-@app.route('/api/statistics', methods=['GET'])
+@app.route('/api/statistics')
 def get_statistics():
-    """Return aggregated pothole statistics."""
     with open(STATS_FILE, "r") as f:
         stats = json.load(f)
     return jsonify(stats)
 
 
-# Run app
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.route('/results/<path:filename>')
+def serve_result(filename):
+    return send_from_directory(RESULT_FOLDER, filename)
+
+if __name__ == '__main__':
+    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
+    app.run(debug=debug_mode)

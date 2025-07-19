@@ -1,0 +1,6 @@
+Flask
+vercel-python
+ultralytics
+opencv-python
+numpy 
+python-dotenv 

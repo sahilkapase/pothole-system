@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Image</title>
+    <title>Pothole Detection</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
@@ -14,7 +14,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 600px;
             margin-top: 50px;
             background-color: white;
             padding: 30px;
@@ -34,27 +34,33 @@
             margin-bottom: 30px;
         }
 
+        .form-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .form-control-file {
+            width: auto;
+            padding: 5px;
+            font-size: 0.9rem;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+
         .btn {
-            width: 100%;
-            padding: 12px;
-            font-size: 1.1rem;
+            width: auto;
+            padding: 8px 16px;
+            font-size: 0.9rem;
             background-color: #007bff;
             border: none;
             border-radius: 5px;
+            margin-top: 15px;
         }
 
         .btn:hover {
             background-color: #0056b3;
-        }
-
-        .form-control-file {
-            border: 1px solid #ced4da;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
         }
 
         #result {
@@ -62,11 +68,13 @@
             background-color: #f8f9fa;
             padding: 15px;
             border-radius: 5px;
+            width: 100%;
         }
 
         table {
             width: 100%;
             margin-top: 20px;
+            border-collapse: collapse;
         }
 
         th,
@@ -78,6 +86,19 @@
 
         th {
             background-color: #f2f2f2;
+        }
+
+        .full-width {
+            width: 100vw; /* Full viewport width */
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+            display: block; /* Ensure it's treated as a block-level element */
+            margin: 20px auto; /* Center the image horizontally */
         }
     </style>
 </head>
@@ -91,34 +112,49 @@
         <form id="upload-form" enctype="multipart/form-data">
             <div class="form-group">
                 <input type="file" class="form-control-file" name="image" required>
+                <button type="submit" class="btn">Upload</button>
             </div>
-            <button type="submit" class="btn">Upload</button>
         </form>
+    </div>
 
-        <!-- Display results here -->
-        <div id="result"></div>
+    <!-- Full-width results section -->
+    <div id="feedback-message" class="full-width"></div>
+    <div id="result" class="full-width"></div>
+    <div id="loading-bar" class="text-center" style="display:none; margin-top:20px;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <p>Processing image, please wait...</p>
     </div>
 
     <script>
         // Handle form submission using AJAX
         $('#upload-form').submit(function(event) {
-            event.preventDefault();  // Prevent form from submitting normally
+            event.preventDefault(); // Prevent form from submitting normally
 
-            var formData = new FormData(this);  // Create FormData object from form input
+            var formData = new FormData(this); // Create FormData object from form input
+
+            // Show loading bar and clear previous result and feedback
+            $('#loading-bar').show();
+            $('#result').html("");
+            $('#feedback-message').html("");
 
             // Send the form data (image file) to the backend API
             $.ajax({
-                url: '/api/upload',
+                url: '/api/upload', // Replace with your backend API endpoint
                 type: 'POST',
                 data: formData,
                 contentType: false,
                 processData: false,
                 success: function(response) {
+                    $('#loading-bar').hide();
+                    // Show success message
+                    $('#feedback-message').html('<div class="alert alert-success text-center">Pothole(s) detected and statistics updated successfully!</div>');
                     console.log('Detection results:', response);
 
                     // Display results in a table
                     var resultHtml = `
-                        <h4>Detection Results</h4>
+                        <h4 class="text-center">Detection Results</h4>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -126,6 +162,7 @@
                                     <th>Polygon Coordinates</th>
                                     <th>Area (m<sup>2</sup>)</th>
                                     <th>Cost (₹)</th>
+                                    <th>Percentage Damage</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -139,21 +176,30 @@
                                 <td>${JSON.stringify(detection.polygon)}</td>
                                 <td>${detection.area_m2.toFixed(2)}</td>
                                 <td>${detection.cost_rupees.toFixed(2)}</td>
+                                <td>${detection.percentage_damage.toFixed(2)}%</td>
                             </tr>
                         `;
                     });
 
                     resultHtml += `
-                            </tbody>
+                        </tbody>
                         </table>
-                        <img src="${response.result_image}" alt="Detected Image" class="img-fluid">
+                        <h4 class="text-center">Bounding Image</h4>
+                        <div class="text-center">
+                            <img src="${response.result_image}" alt="Detected Image" class="img-fluid">
+                        </div>
                     `;
 
                     $('#result').html(resultHtml);
                 },
                 error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                    $('#result').html('<p class="text-danger">There was an error processing the image.</p>');
+                    $('#loading-bar').hide();
+                    let errorMsg = 'There was an error processing the image.';
+                    if (xhr.responseJSON && xhr.responseJSON.error) {
+                        errorMsg = xhr.responseJSON.error;
+                    }
+                    $('#feedback-message').html('<div class="alert alert-danger text-center">' + errorMsg + '</div>');
+                    $('#result').html("");
                 }
             });
         });
