@@ -3,3 +3,7 @@ __pycache__/
 .env
 uploads/
 results/
+best.pt
+*.mp4
+*.jpg
+*.png
